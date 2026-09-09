@@ -1,0 +1,24 @@
+[build]
+command = "npm install"
+functions = "functions"
+publish = "public"
+
+[dev]
+command = "npm run dev"
+port = 3000
+
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/server/:splat"
+status = 200
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+[env]
+  [env.production]
+    SUPABASE_URL = "https://ammbxjabhmfuoutgzqvz.supabase.co"
+    SUPABASE_KEY = "sb_publishable_Y4iAlkuFY1zJrpd6miUARg_Dm9W65Q_"
+    ADMIN_PASSWORD = "critpa2026"
