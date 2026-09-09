@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Clube de Relações Internacionais — Tiradentes Porto Alegre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101B4D;
+    --ink-2:#1230C4;
+    --parchment:#FFFFFF;
+    --parchment-2:#EEF1FA;
+    --paper-line:rgba(16,27,77,0.14);
+    --brass:#C0272B;
+    --brass-soft:rgba(192,39,43,0.28);
+    --signal:#7A1210;
+    --signal-soft:rgba(122,18,16,0.12);
+    --slate:#48538C;
+    --ink-soft:rgba(16,27,77,0.68);
+    --shadow:0 16px 34px rgba(16,27,77,0.14);
+    --shadow-sm:0 6px 16px rgba(16,27,77,0.10);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'IBM Plex Sans', sans-serif;
+    background:var(--parchment);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Oswald', sans-serif; margin:0; color:var(--ink); font-weight:600; }
+  p{ margin:0; }
+  button{ font-family:inherit; cursor:pointer; }
+  input,textarea{ font-family:inherit; }
+  a{ color:inherit; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:0.72rem;
+    color:var(--brass);
+  }
+
+  .logo-badge{
+    width:54px; height:54px; min-width:54px;
+    border-radius:50%;
+    background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 10px rgba(16,27,77,0.25);
+    padding:5px;
+    overflow:hidden;
+  }
+  .logo-badge img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .logo-badge.small{ width:38px; height:38px; min-width:38px; padding:3px; }
+
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--ink); color:var(--parchment);
+    border-bottom:3px solid var(--brass);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 28px; gap:16px; flex-wrap:wrap;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-text h2{ color:var(--parchment); font-size:1.05rem; line-height:1.2; }
+  .brand-text span{ display:block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.1em; color:var(--parchment-2); opacity:0.75; text-transform:uppercase; margin-top:2px; }
+
+  .tabs{ display:flex; gap:6px; background:rgba(255,255,255,0.08); padding:4px; border-radius:2px; }
+  .tab-btn{
+    background:transparent; border:none; color:var(--parchment-2);
+    font-family:'IBM Plex Mono', monospace; font-size:0.76rem; letter-spacing:0.06em; text-transform:uppercase;
+    padding:9px 16px; border-radius:1px; transition:background .15s, color .15s;
+  }
+  .tab-btn.active{ background:var(--brass); color:var(--ink); font-weight:600; }
+  .tab-btn:not(.active):hover{ background:rgba(255,255,255,0.10); }
+
+  .header-actions{ display:flex; align-items:center; gap:10px; }
+  .btn{
+    border:1px solid transparent; padding:9px 16px; font-size:0.82rem; font-weight:600;
+    border-radius:1px; transition:transform .12s ease, box-shadow .12s ease, background .15s;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn:active{ transform:translateY(1px); }
+  .btn-brass{ background:var(--brass); color:var(--ink); }
+  .btn-brass:hover{ box-shadow:var(--shadow-sm); }
+  .btn-ghost{ background:transparent; color:var(--parchment-2); border-color:rgba(255,255,255,0.35); }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.10); }
+  .btn-outline{ background:transparent; color:var(--ink); border-color:var(--ink); }
+  .btn-outline:hover{ background:var(--ink); color:var(--parchment); }
+  .btn-danger{ background:transparent; color:var(--signal); border-color:var(--signal); }
+  .btn-danger:hover{ background:var(--signal); color:var(--parchment); }
+  .btn-sm{ padding:6px 11px; font-size:0.74rem; }
+  .btn[disabled]{ opacity:0.5; cursor:not-allowed; }
+
+  .editor-badge{
+    font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink); background:var(--parchment-2); padding:7px 12px; border-radius:1px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .editor-badge .dot{ width:7px; height:7px; border-radius:50%; background:#3E7A4E; }
+
+  .hero{
+    background:linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parchment);
+    padding:64px 28px 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-waves{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+  .hero-waves svg{ width:100%; height:100%; display:block; }
+  .hero-inner{ max-width:920px; margin:0 auto; position:relative; z-index:1; }
+  .hero .eyebrow{ color:var(--brass); }
+  .hero h1{
+    color:var(--parchment); font-size:clamp(2.1rem, 5vw, 3.4rem); line-height:1.05;
+    margin-top:14px; font-weight:700; max-width:18ch;
+    text-transform:uppercase; letter-spacing:0.01em;
+  }
+  .hero p.lede{
+    color:rgba(255,255,255,0.82); font-size:1.05rem; line-height:1.6; max-width:56ch; margin-top:18px;
+  }
+  .hero-stats{ display:flex; gap:36px; margin-top:38px; flex-wrap:wrap; }
+  .hero-stat .num{ font-family:'Oswald', sans-serif; font-size:2.1rem; color:var(--brass); font-weight:700; line-height:1; }
+  .hero-stat .lab{ font-family:'IBM Plex Mono', monospace; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.65); margin-top:6px; }
+
+  .anim-in{ animation:riseIn .7s ease both; }
+  .anim-in.d1{ animation-delay:.08s; }
+  .anim-in.d2{ animation-delay:.16s; }
+  .anim-in.d3{ animation-delay:.24s; }
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:translateY(0);} }
+  @media (prefers-reduced-motion: reduce){ .anim-in{ animation:none; } }
+
+  main{ max-width:1080px; margin:0 auto; padding:48px 28px 100px; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:26px; flex-wrap:wrap; border-bottom:1px solid var(--paper-line); padding-bottom:16px; }
+  .section-head h2{ font-size:1.5rem; }
+  .section-head .eyebrow{ display:block; margin-bottom:6px; }
+  .section-hidden{ display:none !important; }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:22px; }
+  .card{
+    background:#fff; border:1px solid var(--paper-line); border-radius:2px; overflow:hidden;
+    box-shadow:var(--shadow-sm); transition:transform .15s ease, box-shadow .15s ease;
+    display:flex; flex-direction:column; position:relative;
+  }
+  .card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
+  .card-media{ position:relative; aspect-ratio:16/10; background:var(--parchment-2); overflow:hidden; }
+  .card-media img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .card-media .logo-badge{ position:absolute; bottom:-16px; right:16px; }
+  .card-media.empty{ display:flex; align-items:center; justify-content:center; }
+  .card-media.empty .logo-badge{ position:static; width:64px; height:64px; padding:8px; }
+  .card-body{ padding:20px 18px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .card-ref{ display:flex; justify-content:space-between; align-items:center; }
+  .card-ref .code{ font-size:0.68rem; color:var(--slate); letter-spacing:0.06em; }
+  .card-ref .date{ font-size:0.68rem; color:var(--slate); letter-spacing:0.04em; }
+  .card h3{ font-size:1.18rem; line-height:1.3; }
+  .card .desc{ font-size:0.9rem; line-height:1.55; color:var(--ink-soft); }
+  .card .desc.clamped{ display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .more-link{ font-size:0.78rem; font-weight:600; color:var(--signal); background:none; border:none; padding:0; align-self:flex-start; margin-top:2px; }
+  .card-edit-actions{ position:absolute; top:10px; right:10px; display:flex; gap:6px; z-index:5; }
+  .icon-btn{
+    width:30px; height:30px; border-radius:50%; border:1px solid var(--paper-line); background:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:0.85rem; box-shadow:var(--shadow-sm);
+  }
+  .icon-btn:hover{ background:var(--parchment-2); }
+  .icon-btn.danger:hover{ background:var(--signal); color:#fff; border-color:var(--signal); }
+
+  .add-tile{
+    border:2px dashed var(--brass-soft); border-radius:2px; min-height:220px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    color:var(--slate); background:rgba(192,39,43,0.05); transition:background .15s;
+  }
+  .add-tile:hover{ background:rgba(192,39,43,0.12); }
+  .add-tile .plus{ font-size:1.8rem; color:var(--brass); font-family:'Oswald',sans-serif; }
+
+  .empty-state{
+    text-align:center; padding:60px 20px; color:var(--slate); border:1px dashed var(--paper-line); border-radius:2px; background:rgba(255,255,255,0.4);
+  }
+  .empty-state h3{ font-size:1.15rem; margin-bottom:8px; color:var(--ink); }
+  .empty-state p{ font-size:0.9rem; margin-bottom:18px; }
+
+  .sim-group-label{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--slate); margin:30px 0 14px; }
+  .sim-group-label:first-child{ margin-top:0; }
+  .sim-list{ display:flex; flex-direction:column; gap:12px; }
+  .sim-row{
+    display:flex; align-items:center; gap:18px; background:#fff; border:1px solid var(--paper-line);
+    border-radius:2px; padding:16px 18px; box-shadow:var(--shadow-sm); position:relative;
+  }
+  .sim-row.past{ opacity:0.62; }
+  .sim-date-block{
+    font-family:'IBM Plex Mono',monospace; text-align:center; min-width:60px; padding:8px 6px;
+    background:var(--ink); color:var(--parchment); border-radius:1px;
+  }
+  .sim-date-block .d{ font-size:1.2rem; font-weight:600; line-height:1; }
+  .sim-date-block .m{ font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; margin-top:4px; opacity:0.8; }
+  .sim-main{ flex:1; min-width:0; }
+  .sim-main h3{ font-size:1.08rem; }
+  .sim-meta{ display:flex; gap:14px; flex-wrap:wrap; margin-top:6px; font-size:0.82rem; color:var(--slate); }
+  .sim-meta span{ display:flex; align-items:center; gap:5px; }
+  .sim-tags{ display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+  .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:0.66rem; letter-spacing:0.05em; text-transform:uppercase;
+    background:var(--signal-soft); color:var(--signal); padding:4px 9px; border-radius:20px; border:1px solid rgba(122,18,16,0.18);
+  }
+  .sim-status{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.05em; text-transform:uppercase; padding:5px 10px; border-radius:20px; white-space:nowrap; }
+  .sim-status.upcoming{ background:rgba(62,122,78,0.12); color:#2F6140; }
+  .sim-status.today{ background:var(--brass); color:var(--ink); }
+  .sim-status.past{ background:var(--parchment-2); color:var(--slate); }
+  .sim-actions{ display:flex; gap:6px; }
+
+  .add-row{
+    border:2px dashed var(--brass-soft); border-radius:2px; padding:16px 18px; display:flex; align-items:center; justify-content:center;
+    gap:8px; color:var(--slate); background:rgba(192,39,43,0.05);
+  }
+  .add-row:hover{ background:rgba(192,39,43,0.12); }
+
+  footer{ border-top:1px solid var(--paper-line); padding:26px 28px; text-align:center; }
+  footer p{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--slate); letter-spacing:0.04em; }
+  footer .footer-note{ font-family:'IBM Plex Sans',sans-serif; font-size:0.82rem; color:var(--ink-soft); letter-spacing:0; font-style:italic; margin-top:10px; }
+
+  .overlay{
+    position:fixed; inset:0; background:rgba(16,27,77,0.55); backdrop-filter:blur(2px);
+    display:flex; align-items:flex-start; justify-content:center; padding:5vh 16px; z-index:100; overflow-y:auto;
+  }
+  .overlay.hidden{ display:none; }
+  .modal{
+    background:var(--parchment); border-radius:3px; width:100%; max-width:520px; box-shadow:0 30px 60px rgba(0,0,0,0.35);
+    border-top:4px solid var(--brass); animation:modalIn .18s ease both;
+  }
+  @keyframes modalIn{ from{ opacity:0; transform:translateY(10px) scale(.98);} to{ opacity:1; transform:translateY(0) scale(1);} }
+  .modal-head{ display:flex; align-items:center; justify-content:space-between; padding:20px 22px 0; }
+  .modal-head h3{ font-size:1.2rem; }
+  .modal-close{ background:none; border:none; font-size:1.3rem; color:var(--slate); line-height:1; padding:4px; }
+  .modal-body{ padding:16px 22px 22px; display:flex; flex-direction:column; gap:14px; }
+  .field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--slate); margin-bottom:6px; }
+  .field input[type=text], .field input[type=date], .field input[type=password], .field textarea{
+    width:100%; border:1px solid var(--paper-line); background:#fff; padding:10px 12px; border-radius:2px; font-size:0.92rem; color:var(--ink);
+  }
+  .field input:focus, .field textarea:focus{ outline:2px solid var(--brass); outline-offset:1px; }
+  .field textarea{ resize:vertical; min-height:90px; }
+  .field-row{ display:flex; gap:12px; }
+  .field-row .field{ flex:1; }
+  .hint{ font-size:0.76rem; color:var(--slate); }
+  .error-msg{ font-size:0.82rem; color:var(--signal); font-weight:600; min-height:1.2em; }
+
+  .photo-input-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .photo-thumb{ position:relative; width:74px; height:74px; border-radius:2px; overflow:hidden; border:1px solid var(--paper-line); }
+  .photo-thumb img{ width:100%; height:100%; object-fit:cover; }
+  .photo-thumb .rm{ position:absolute; top:2px; right:2px; width:18px; height:18px; border-radius:50%; background:rgba(16,27,77,0.75); color:#fff; border:none; font-size:0.65rem; line-height:1; display:flex; align-items:center; justify-content:center; }
+  .photo-add{
+    width:74px; height:74px; border:2px dashed var(--brass-soft); border-radius:2px; display:flex; align-items:center; justify-content:center;
+    color:var(--brass); font-size:1.3rem; background:rgba(192,39,43,0.05); position:relative;
+  }
+  .photo-add input{ position:absolute; inset:0; opacity:0; cursor:pointer; }
+
+  .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:4px; }
+
+  #toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); opacity:0;
+    background:var(--ink); color:var(--parchment); padding:12px 20px; border-radius:2px; font-size:0.85rem;
+    box-shadow:var(--shadow); z-index:200; transition:opacity .2s, transform .2s; pointer-events:none;
+    border-left:3px solid var(--brass);
+  }
+  #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  #loading-screen{ position:fixed; inset:0; background:var(--ink); color:var(--parchment); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; z-index:999; }
+  #loading-screen .eyebrow{ color:var(--brass); }
+
+  @media (max-width: 640px){
+    .hero{ padding:48px 20px 42px; }
+    main{ padding:36px 16px 80px; }
+    .sim-row{ flex-wrap:wrap; }
+    .sim-actions{ width:100%; justify-content:flex-end; }
+    .header-actions .btn span.long{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="loading-screen">
+  <div class="logo-badge"><img id="loading-logo" alt="Emblema CRITPA"></div>
+  <p class="eyebrow">Carregando o arquivo do clube…</p>
+</div>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="logo-badge"><img id="header-logo" alt="Emblema CRITPA"></div>
+    <div class="brand-text">
+      <h2>Clube de Relações Internacionais</h2>
+      <span>CRITPA · Tiradentes · Porto Alegre</span>
+    </div>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Seções do site">
+    <button class="tab-btn active" data-tab="mural">Mural</button>
+    <button class="tab-btn" data-tab="calendario">Calendário</button>
+  </nav>
+  <div class="header-actions" id="header-actions"></div>
+</header>
+
+<section class="hero">
+  <div class="hero-waves" aria-hidden="true">
+    <svg viewBox="0 0 1200 500" preserveAspectRatio="none">
+      <path d="M0,190 C260,110 480,260 760,200 C980,150 1090,230 1200,190 L1200,500 L0,500 Z" fill="#1230C4" opacity="0.45"/>
+      <path d="M0,270 C240,350 560,190 820,290 C1000,360 1110,270 1200,310 L1200,500 L0,500 Z" fill="#C0272B" opacity="0.30"/>
+      <path d="M0,350 C300,290 620,390 900,330 C1060,300 1150,350 1200,340 L1200,500 L0,500 Z" fill="#7A1210" opacity="0.28"/>
+    </svg>
+  </div>
+  <div class="hero-inner">
+    <p class="eyebrow anim-in">Boletim do CRITPA</p>
+    <h1 class="anim-in d1">Diplomacia, debate e simulação — o registro do nosso clube.</h1>
+    <p class="lede anim-in d2">Aqui ficam os registros dos nossos eventos e o calendário das próximas simulações, com comitê, local e data — pra ninguém perder uma sessão.</p>
+    <div class="hero-stats anim-in d3">
+      <div class="hero-stat"><div class="num" id="stat-posts">0</div><div class="lab">Eventos no arquivo</div></div>
+      <div class="hero-stat"><div class="num" id="stat-upcoming">0</div><div class="lab">Simulações confirmadas</div></div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section id="mural">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Mural</span>
+        <h2>Registro de eventos</h2>
+      </div>
+    </div>
+    <div class="grid" id="posts-grid"></div>
+  </section>
+
+  <section id="calendario" class="section-hidden">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Calendário</span>
+        <h2>Simulações</h2>
+      </div>
+    </div>
+    <div id="sim-container"></div>
+  </section>
+</main>
+
+<footer>
+  <p>CRITPA · CLUBE DE RELAÇÕES INTERNACIONAIS · TIRADENTES · PORTO ALEGRE</p>
+  <p class="footer-note">Com carinho, Walter Rafael, para os amigos do CRITPA Silva e Darcanchy.</p>
+</footer>
+
+<div id="toast"></div>
+
+<!-- Password modal -->
+<div class="overlay hidden" id="password-overlay">
+  <div class="modal" style="max-width:380px;">
+    <div class="modal-head"><h3>Entrar como membro</h3><button class="modal-close" data-close="password-overlay">&times;</button></div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="password-input">Código do clube</label>
+        <input type="password" id="password-input" placeholder="••••••••">
+      </div>
+      <p class="error-msg" id="password-error"></p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="password-submit">Entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settings modal (change password) -->
+<div class="overlay hidden" id="settings-overlay">
+  <div class="modal" style="max-width:380px;">
+    <div class="modal-head"><h3>Trocar código do clube</h3><button class="modal-close" data-close="settings-overlay">&times;</button></div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="new-password-input">Novo código</label>
+        <input type="text" id="new-password-input" placeholder="Novo código de acesso">
+      </div>
+      <p class="hint">Vale pra todo mundo que já tem o link do site — combine com o clube antes de trocar.</p>
+      <p class="error-msg" id="settings-error"></p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="settings-save">Salvar novo código</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Post modal -->
+<div class="overlay hidden" id="post-overlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="post-modal-title">Novo registro</h3><button class="modal-close" data-close="post-overlay">&times;</button></div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="post-title">Título do evento</label>
+        <input type="text" id="post-title" placeholder="Ex.: Sessão aberta sobre crise climática">
+      </div>
+      <div class="field">
+        <label for="post-date">Data do evento</label>
+        <input type="date" id="post-date">
+      </div>
+      <div class="field">
+        <label for="post-desc">Descrição</label>
+        <textarea id="post-desc" placeholder="Como foi o evento, quem participou, o que rolou..."></textarea>
+      </div>
+      <div class="field">
+        <label>Fotos (até 4 — são redimensionadas automaticamente)</label>
+        <div class="photo-input-row" id="photo-input-row">
+          <div class="photo-add"><span>+</span><input type="file" id="photo-file-input" accept="image/*" multiple></div>
+        </div>
+      </div>
+      <p class="error-msg" id="post-error"></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" style="color:var(--slate); border-color:var(--paper-line);" data-close="post-overlay">Cancelar</button>
+        <button class="btn btn-outline" id="post-save">Salvar registro</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Simulation modal -->
+<div class="overlay hidden" id="sim-overlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="sim-modal-title">Nova simulação</h3><button class="modal-close" data-close="sim-overlay">&times;</button></div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="sim-name">Nome da simulação</label>
+        <input type="text" id="sim-name" placeholder="Ex.: PortoMUN 2026">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="sim-date">Data</label>
+          <input type="date" id="sim-date">
+        </div>
+        <div class="field">
+          <label for="sim-location">Local</label>
+          <input type="text" id="sim-location" placeholder="Ex.: Colégio Tiradentes">
+        </div>
+      </div>
+      <div class="field">
+        <label for="sim-committees">Comitês (separados por vírgula)</label>
+        <input type="text" id="sim-committees" placeholder="Ex.: CSNU, OMS, Conselho da Europa">
+      </div>
+      <div class="field">
+        <label for="sim-notes">Informações extras (opcional)</label>
+        <textarea id="sim-notes" placeholder="Link de inscrição, taxa, observações..."></textarea>
+      </div>
+      <p class="error-msg" id="sim-error"></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" style="color:var(--slate); border-color:var(--paper-line);" data-close="sim-overlay">Cancelar</button>
+        <button class="btn btn-outline" id="sim-save">Salvar simulação</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
